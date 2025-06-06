@@ -2,6 +2,7 @@ package com.apuliadigital.corsospring.controller;
 
 import com.apuliadigital.corsospring.model.User;
 import com.apuliadigital.corsospring.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user){
+    public User createUser(@RequestBody @Valid User user){
         return userService.createUser(user);
     }
 

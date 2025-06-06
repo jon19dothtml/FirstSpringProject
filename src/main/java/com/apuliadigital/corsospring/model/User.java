@@ -1,10 +1,45 @@
 package com.apuliadigital.corsospring.model;
 
-public class User {
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jdk.jfr.Name;
+import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Entity
+@Table(name = "users")
+
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @NotBlank(message="Il nome non può essere vuoto")
+    @Column(nullable = false)
     private String name;
+
+    @NotBlank(message = "L'Email non può essere vuota ")
+    @Email(message="Formato Email non valido")
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private int age;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Post> posts= new ArrayList<>();
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
 
     public User(){}
 
@@ -14,7 +49,6 @@ public class User {
         this.email = email;
         this.age = age;
     }
-    private int id;
 
     public int getId() {
         return id;
